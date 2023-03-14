@@ -63,6 +63,9 @@ RUN [ ${CPU_OR_GPU} = "gpu" ] && export CONDA_OVERRIDE_CUDA="11.0" || export CON
     && find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete \
     && find ${CONDA_DIR} -follow -type f -name '*.js.map' -delete
 
+WORKDIR /code_execution
+
 COPY entrypoint.sh /entrypoint.sh
+COPY tests /code_execution/tests
 
 CMD ["/bin/bash", "/entrypoint.sh"]
