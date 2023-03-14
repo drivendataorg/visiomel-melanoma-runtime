@@ -11,7 +11,7 @@ ENV CONDA_VERSION=22.11.1-4 \
     SHELL=/bin/bash \
     LANG=C.UTF-8  \
     LC_ALL=C.UTF-8 \
-    CONDA_DIR=/srv/conda \
+    CONDA_DIR=/opt/conda \
     DEBIAN_FRONTEND=noninteractive
 
 ENV CPU_OR_GPU=${CPU_OR_GPU} \
@@ -27,7 +27,7 @@ RUN echo "Creating ${RUNTIME_USER} user..." \
     && groupadd --gid ${RUNTIME_UID} ${RUNTIME_USER}  \
     && useradd --create-home --gid ${RUNTIME_UID} --no-log-init --uid ${RUNTIME_UID} ${RUNTIME_USER} \
     && echo ". ${CONDA_DIR}/etc/profile.d/conda.sh ; conda activate ${CONDA_ENV}" > /etc/profile.d/init_conda.sh \
-    && chown -R ${RUNTIME_USER}:${RUNTIME_USER} /srv /code_execution
+    && chown -R ${RUNTIME_USER}:${RUNTIME_USER} /opt /code_execution
 
 # Install base packages
 ARG DEBIAN_FRONTEND=noninteractive
