@@ -19,13 +19,23 @@ main () {
     echo "######################################"
 
     echo Unpacking submission
-    unzip ./submission/submission.zip -d ./src
+    unzip ./submission/submission.zip -d ./
 
-    tree ./src
+    ls -alh
 
     echo "Running code submission with Python"
     conda run --no-capture-output -n condaenv python main.py
-    echo "... finished"
+
+    echo "Exporting submission.csv result..."
+    # Valid scripts must create a "submission.csv" file within the same directory as main
+    if [ -f "submission.csv" ]
+    then
+        echo "Script completed its run."
+        cp submission.csv ./submission/submission.csv
+    else
+        echo "ERROR: Script did not produce a submission.csv file in the main directory."
+        exit_code=1
+    fi
 
     echo "================ END ================"
 }
