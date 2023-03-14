@@ -27,6 +27,7 @@ main () {
     conda run --no-capture-output -n condaenv python main.py
 
     echo "Exporting submission.csv result..."
+
     # Valid scripts must create a "submission.csv" file within the same directory as main
     if [ -f "submission.csv" ]
     then

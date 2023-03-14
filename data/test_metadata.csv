@@ -1,0 +1,4 @@
+filename,age,sex,body_site,melanoma_history
+P00000.tif,[10-12[,1,TRUNK,YES
+P00001.tif,[10-12[,1,TRUNK,YES
+P00002.tif,[10-12[,1,TRUNK,YES

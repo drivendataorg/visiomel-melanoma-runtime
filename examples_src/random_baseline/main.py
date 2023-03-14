@@ -14,10 +14,10 @@ def predict(filename):
 
 def main():
     # load metadata
-    metadata = pd.read_csv(DATA_ROOT / "test_metadata.csv", index_col=0)
+    metadata = pd.read_csv(DATA_ROOT / "test_metadata.csv")
 
     # load sumission format
-    submission_format = pd.read_csv(DATA_ROOT / "submission_format.csv", index_col=0)
+    submission_format = pd.read_csv(DATA_ROOT / "submission_format.csv")
 
     # iterate over all images in the metdata
     for filename in metadata.filename:
@@ -35,7 +35,7 @@ def main():
         submission_format.loc[filename, "relapse"] = pred
 
     # save as "submission.csv" in the root folder, where it is expected
-    submission_format.to_csv("submission.csv")
+    submission_format.to_csv("submission.csv", index=False)
 
 
 if __name__ == "__main__":
