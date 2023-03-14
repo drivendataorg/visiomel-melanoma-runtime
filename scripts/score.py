@@ -2,16 +2,16 @@ from pathlib import Path
 
 import pandas as pd
 from loguru import logger
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import log_loss
 
 REPO_ROOT = Path(__file__).parents[1]
 
 
 def main():
-    """Computes the mean absolute error for provided predictions and labels."""
+    """Computes the log loss for provided predictions and labels."""
     predictions = pd.read_csv(REPO_ROOT / "submission" / "submission.csv")
     labels = pd.read_csv(REPO_ROOT / "data" / "test_labels.csv")
-    score = mean_absolute_error(labels.minutes_until_pushback, predictions.minutes_until_pushback)
+    score = log_loss(labels.relapse, predictions.relapse)
     logger.success(f"Score: {score}")
 
 

@@ -1,4 +1,4 @@
-name: nasa-pushback
+name: condaenv
 channels:
   - conda-forge
   - defaults

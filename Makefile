@@ -13,14 +13,14 @@ endif
 TAG := ${CPU_OR_GPU}-latest
 LOCAL_TAG := ${CPU_OR_GPU}-local
 
-IMAGE_NAME = nasapushback-competition
-OFFICIAL_IMAGE = nasapushback.azurecr.io/${IMAGE_NAME}
+IMAGE_NAME = visiomelmelanoma-competition
+OFFICIAL_IMAGE = visiomelmelanoma.azurecr.io/${IMAGE_NAME}
 LOCAL_IMAGE = ${IMAGE_NAME}
 
 # Resolve which image to use in commands. The priority is:
 # 1. User-provided, e.g., SUBMISSION_IMAGE=my-image:gpu-local make test-submission
-# 2. Local image, e.g., nasapushback-competition:gpu-local
-# 3. Official competition image, e.g., nasapushback.azurecr.io/nasapushback-competition
+# 2. Local image, e.g., visiomelmelanoma-competition:gpu-local
+# 3. Official competition image, e.g., visiomelmelanoma.azurecr.io/visiomelmelanoma-competition
 SUBMISSION_IMAGE ?= ${LOCAL_IMAGE}:${LOCAL_TAG}
 ifeq (,$(shell docker images -q ${SUBMISSION_IMAGE}))
 SUBMISSION_IMAGE = ${OFFICIAL_IMAGE}:${TAG}
@@ -30,7 +30,7 @@ endif
 SUBMISSION_IMAGE_ID := $(shell docker images -q ${SUBMISSION_IMAGE})
 
 # Name of the running container, i.e., docker run ... --name <CONTAINER_NAME>
-CONTAINER_NAME ?= nasapushback
+CONTAINER_NAME ?= visiomelmelanoma
 
 # Enable or disable host GPU access
 ifeq (${CPU_OR_GPU}, gpu)
@@ -53,7 +53,7 @@ NETWORK_ARGS = --network none
 endif
 
 # Name of the example submission to pack when running `make pack-example`
-EXAMPLE ?= fuser_etd_minus_15_min_benchmark
+EXAMPLE ?= random_baseline
 
 # Give write access to the submission folder to everyone so Docker user can write when mounted
 _submission_write_perms:
@@ -121,7 +121,7 @@ test-container: _check_image _echo_image _submission_write_perms
 		--pid host \
 		--entrypoint /bin/bash \
 		${SUBMISSION_IMAGE_ID} \
-		-c "conda run --no-capture-output -n nasa-pushback python -m pytest tests"
+		-c "conda run --no-capture-output -n condaenv python -m pytest tests"
 
 ## Open an interactive bash shell within the running container (with network access)
 interact-container: _check_image _echo_image _submission_write_perms

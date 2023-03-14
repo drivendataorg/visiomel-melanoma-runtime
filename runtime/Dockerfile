@@ -5,7 +5,7 @@ FROM nvidia/cuda:11.0.3-base-ubuntu20.04
 ARG CPU_OR_GPU=gpu
 
 ENV CONDA_VERSION=22.11.1-4 \
-    CONDA_ENV=nasa-pushback \
+    CONDA_ENV=visiomel-melanoma \
     RUNTIME_USER=appuser \
     RUNTIME_UID=1000 \
     SHELL=/bin/bash \
@@ -64,8 +64,6 @@ RUN [ ${CPU_OR_GPU} = "gpu" ] && export CONDA_OVERRIDE_CUDA="11.0" || export CON
     && find ${CONDA_DIR} -follow -type f -name '*.js.map' -delete
 
 COPY entrypoint.sh /entrypoint.sh
-COPY config.py /code_execution/config.py
-COPY supervisor.py /code_execution/supervisor.py
 RUN mkdir /code_execution/predictions
 
 CMD ["/bin/bash", "/entrypoint.sh"]

@@ -16,8 +16,8 @@ jobs:
       matrix:
         proc: ["cpu", "gpu"]
     env:
-      LOGIN_SERVER: nasapushback.azurecr.io
-      IMAGE: nasapushback-competition
+      LOGIN_SERVER: visiomelmelanoma.azurecr.io
+      IMAGE: visiomelmelanoma-competition
       SHA_TAG: ${{ matrix.proc }}-${{ github.sha }}
       LATEST_TAG: ${{ matrix.proc }}-latest
       PUBLISH_IMAGE: ${{ secrets.PUBLISH_IMAGE }}
@@ -39,7 +39,7 @@ jobs:
       - name: Tests packages in container
         run: |
           docker run --entrypoint /bin/bash $LOGIN_SERVER/$IMAGE:$SHA_TAG \
-            -c "conda run --no-capture-output -n nasa-pushback python -m pytest tests"
+            -c "conda run --no-capture-output -n condaenv python -m pytest tests"
 
       - name: Log into Azure
         if: ${{ github.ref == 'refs/heads/main' && env.PUBLISH_IMAGE == 'PUBLISH_IMAGE' }}
