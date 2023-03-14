@@ -3,10 +3,8 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - catboost=1.1.1
   - eigen=3.4.0
   - keras=2.11.0
-  - lightgbm=3.3.5
   - loguru=0.6.0
   - mkl=2022.2.1
   - networkx=3.0
@@ -36,4 +34,3 @@ dependencies:
   - tensorflow-estimator=2.11.0
   - torchmetrics=0.11.1
   - tqdm=4.64.1
-  - xgboost=1.7.1
