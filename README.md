@@ -1,1 +1,1 @@
-# visiomel-melanoma-runtime
+# VisioMel Challenge: Predicting Melanoma Relapse
