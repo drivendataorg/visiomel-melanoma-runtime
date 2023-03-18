@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-DATA_ROOT = Path(__file__).parent / "data"
+DATA_ROOT = Path("/code_execution/data")
 
 
 def predict(filename):
@@ -23,7 +23,7 @@ def main():
         filepath = DATA_ROOT / filename
 
         # make sure the image exists
-        # assert filepath.exists()
+        assert filepath.exists()
 
         # generate a prediction for that file
         pred = predict(filepath)
