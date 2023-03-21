@@ -6,7 +6,7 @@ Welcome to the runtime repository for the [VisioMel Challenge: Predicting Melano
 
 This repository has three primary uses for competitors:
 
-:bulb: **Provide example solutions**: You can find an examples to help you develop your solution. [Baseline solution](https://github.com/drivendataorg/visiomel-melanoma-runtime/tree/main/examples_src/random_baseline) contains minimal code that runs succesfully in the runtime environment output and outputs a proper submission. This simply generates a random probability between zero and one for each tif. You can use this as a guide to bring in your model and generate a submission.
+:bulb: **Provide example solutions**: You can find an examples to help you develop your solution. The [random baseline solution](https://github.com/drivendataorg/visiomel-melanoma-runtime/tree/main/examples_src/random_baseline) contains minimal code that runs succesfully in the runtime environment output and outputs a proper submission. This simply generates a random probability between zero and one for each tif. You can use this as a guide to bring in your model and generate a submission.
 
 :wrench: **Test your submission**: Test your submission using a locally running version of the competition runtime to discover errors before submitting to the competition site. You can also find a [scoring script](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/scripts/score.py) implementing the competition metric.
 
@@ -45,7 +45,7 @@ Additional requirements to run with GPU:
 
 ### Simulating test data
 
-To run a submission, the code execution environment reads images, metadata, and the submission format from the data directory on the host machine. The test set images and metadata are _only accessible in the runtime container_ and are mounted at `code_execution/data`.
+In the official code execution platform, `code_execution/data` will contain the _actual test data_, which no participants have access to, and this is what will be used to compute your score for the leaderboard.
 
 To help you develop and debug your submissions, we provide a small sample of data with the same format. These files are created from the train set, but mimic the set up that you'll have in the runtime container.
 
