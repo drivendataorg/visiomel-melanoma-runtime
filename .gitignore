@@ -61,3 +61,6 @@ pip-wheel-metadata/
 
 # Submissions
 submission/
+
+# Data
+data/
