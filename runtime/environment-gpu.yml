@@ -19,6 +19,7 @@ dependencies:
   - pytorch=1.13.1
   - pytorch-gpu=1.13.1=cuda112py310*
   - pytorch-lightning=1.9.1
+  - pyvips=2.2.1
   - scikit-image=0.19.3
   - scikit-learn=1.2.1
   - scipy=1.10.0
