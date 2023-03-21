@@ -45,11 +45,11 @@ Additional requirements to run with GPU:
 
 ### Simulating test data
 
-In the official code execution platform, `code_execution/data` will contain the _actual test data_, which no participants have access to, and this is what will be used to compute your score for the leaderboard.
+In the official code execution platform, `code_execution/data` will contain the _actual test data_, which no participants have access to, and is what will be used to compute your score for the leaderboard.
 
 To help you develop and debug your submissions, we provide a small sample of data with the same format. These files are created from the train set, but mimic the set up that you'll have in the runtime container.
 
-Start by downloading `code_execution_development_data.tgz` from the [Data download page](https://www.drivendata.org/competitions/148/visiomel/data/). Unzip and extract the archive to `data` directory and you can develop and debug your submission on your local machine.
+Start by downloading `code_execution_development_data.tgz` from the [data download page](https://www.drivendata.org/competitions/148/visiomel/data/). Unzip and extract the archive to `data` directory and you can develop and debug your submission on your local machine.
 
 ```
 $ tree data
@@ -61,7 +61,7 @@ data
 └── test_metadata.csv
 ```
 
-Note that in the runtime container, there will be around 500 tifs. And of course, there will not be a labels csv, which is included here for your use in scoring locally.
+Note that there will be around 500 tifs in the actual test data. And of course, there will not be a labels csv, which is included here for your use in scoring locally.
 
 ### Code submission format
 
@@ -105,7 +105,7 @@ Run `make help` for more information about the available commands as well as inf
 Here's the process in a bit more detail:
 
 1. First, make sure you have set up the [prerequisites](#prerequisites).
-2. [Download the code execution development dataset](#simulating-test-data) and extract it to `data`.
+2. [Download the code execution development dataset](https://www.drivendata.org/competitions/148/visiomel/data/) and extract it to `data`.
 3. Download the official competition Docker image:
 
 ```
@@ -114,7 +114,7 @@ $ make pull
 
 > Note that if you have built a local version of the runtime image with `make build`, that image will take precedence over the pulled image when using any make commands that run a container. You can explicitly use the pulled image by setting the `SUBMISSION_IMAGE` shell/environment variable to the pulled image or by deleting all locally built images.
 
-4. Save all of your submission files, including the required `solution.py` script, in the `submission_src` folder of the runtime repository. Make sure any needed model weights and other assets are saved in `submission_src` as well.
+4. Save all of your submission files, including the required `main.py` script, in the `submission_src` folder of the runtime repository. Make sure any needed model weights and other assets are saved in `submission_src` as well.
 
 5. Create a `submission/submission.zip` file containing your code and model assets:
 
@@ -133,7 +133,7 @@ $ make test-submission
 
 This runs the container [entrypoint](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/runtime/entrypoint.sh), which unzips `submission/submission.zip` in the root directory of the container and runs the `main.py`script from your submission. In the local testing setting, the final submission is saved out to `submission/submission.csv` on your local machine.
    
-> ⚠️ **Remember** that `code_execution/data` is just a mounted version of what you have saved locally in `data` so you will just be using the publicly available training files for local testing. In the official code execution platform, `code_execution/data` will contain the _actual test data_, which no participants have access to, and this is what will be used to compute your score for the leaderboard.
+> ⚠️ **Remember** that `code_execution/data` is just a mounted version of what you have saved locally in `data` so you will just be using the publicly available training files for local testing. In the official code execution platform, `code_execution/data` will contain the actual test data.
 
 When you run `make test-submission` the logs will be printed to the terminal and written out to `submission/log.txt`. If you run into errors, use the `log.txt` to determine what changes you need to make for your code to execute successfully. For an example of what the logs look like when the full process runs successfully, see [`example_log.txt`](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/example_log.txt).
 
@@ -147,8 +147,7 @@ We have provided a [scoring script](https://github.com/drivendataorg/visiomel-me
 
 ```
 $ python scripts/score.py
-# TODO: update
-2023-02-21 15:45:40.062 | SUCCESS  | __main__:main:15 - Score: 44.23704789833822
+2023-03-21 16:01:04.372 | SUCCESS  | __main__:main:15 - Score: 1.4787577257948117
 ```
 
 ## Troubleshooting
@@ -167,7 +166,7 @@ cp ~/.cache/torch/checkpoints/resnet34-333f7ec4.pth submission_src/assets/
 zip -r submission.zip submission_src
 ```
 
-When the platform runs your code, it will extract `assets` to `/code_execution/assets`. You'll need to tell PyTorch to use your custom cache directory instead of `~/.cache/torch` by setting the `TORCH_HOME` environment variable in your Python code (in `solution.py` for example).
+When the platform runs your code, it will extract `assets` to `/code_execution/assets`. You'll need to tell PyTorch to use your custom cache directory instead of `~/.cache/torch` by setting the `TORCH_HOME` environment variable in your Python code (in `main.py` for example).
 
 ```python
 import os
