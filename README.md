@@ -6,9 +6,7 @@ Welcome to the runtime repository for the [VisioMel Challenge: Predicting Melano
 
 This repository has three primary uses for competitors:
 
-:bulb: **Provide example solutions**: You can find two examples to help you develop your solution.
-1. [Baseline solution](https://github.com/drivendataorg/visiomel-melanoma-runtime/tree/main/examples_src/random_baseline): minimal code that runs succesfully in the runtime environment output and outputs a proper submission. This simply generates a random probability between zero and one for each tif. You can use this as a guide to bring in your model and generate a submission.
-2. Implementation of the [benchmark solution](https://github.com/drivendataorg/visiomel-melanoma-runtime/tree/main/examples_src/random_forest_benchmark): submission code based on the [benchmark blog post](https://www.drivendata.co/blog/visiomel-melanoma-benchmark).
+:bulb: **Provide example solutions**: You can find an examples to help you develop your solution. [Baseline solution](https://github.com/drivendataorg/visiomel-melanoma-runtime/tree/main/examples_src/random_baseline) contains minimal code that runs succesfully in the runtime environment output and outputs a proper submission. This simply generates a random probability between zero and one for each tif. You can use this as a guide to bring in your model and generate a submission.
 
 :wrench: **Test your submission**: Test your submission using a locally running version of the competition runtime to discover errors before submitting to the competition site. You can also find a [scoring script](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/scripts/score.py) implementing the competition metric.
 
@@ -84,24 +82,17 @@ The supervisor repeats steps 2-6 for each airport and prediction time in order t
 Here's a few **do**s and **don't**s:
 
 **Do**:
-- Write a function `predict` that takes the censored features (`config`, `etd`, `first_position`, `lamp`, `mfs`, `runways`, `standtimes`, `tbfm`, `tfm`), airport code, prediction time, partial submission format, any model assets, and path to your solution directory.
-- Use the features that the supervisor passes to your `predict` function at each call. These are guaranteed to be in the past relative to the prediction time.
-- Return your pushback prediction times for all flights in the partial submission format that was passed to your `predict` function.
+- Write a function `main` that iterates over the tif files and predicts the likelihood of relapse for each one.
 - Log general information that will help you debug your submission.
 - Test your submission locally and using the smoke test functionality on the platform.
-- Load your model in the `load_model` function to minimize repeated disk read.
+- Consider ways to optimize your pipeline so that it runs end-to-end in under 8 hours.
 
 **Don't**:
 - Read from locations other than your solution directory.
-- Write out files that can be used across calls to your `predict` function, for example caching features from previous time points.
-- Print or log any information about the test features or test submission format, including specific data values and aggregations such as sums, means, or counts.
+- Use information from other images in the test set in making a prediction for a given tif file.
+- Print or log any information about the test metadata or test images, including specific data values and aggregations such as sums, means, or counts.
 
 **Participants who violate these guidelines will be subject for disqualification from the competition.**
-
-As long as you only use what the supervisor passes to your `predict` function, you can be sure your model isn't using information from the future. We provide the supervisor and utility scripts; all you need to do is provide the `predict` and `load_model` functions. We have included two sample solutions to help you get started:
-- [`examples_src/30_min_to_pushback_benchmark`](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/examples_src/30_min_to_pushback_benchmark), which implements an extremely simple (but entirely valid) submission, predicting 30 minutes to pushback for all flights (a dreadful scenario).
-- [`examples_src/fuser_etd_minus_15_min_benchmark`](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/examples_src/fuser_etd_minus_15_min_benchmark), which implements the _Fuser ETD minus 15 minutes_ solution from the [benchmark blog post](https://www.drivendata.co/blog/airport-pushback-benchmark).
-
 
 ## Testing a submission locally
 
@@ -150,7 +141,7 @@ $ make test-submission
 
 This runs the container [entrypoint](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/runtime/entrypoint.sh), which unzips `submission/submission.zip` in the root directory of the container and runs the `main.py`script from your submission. In the local testing setting, the final submission is saved out to `submission/submission.csv` on your local machine.
    
-> Remember that `code_execution/data` is a mounted version of what you have saved locally in `data`. In the official code execution platform, `code_execution/data` will contain the actual test images.
+> ⚠️ **Remember** that `code_execution/data` is just a mounted version of what you have saved locally in `data` so you will just be using the publicly available training files for local testing. In the official code execution platform, `code_execution/data` will contain the _actual test data_, which no participants have access to, and this is what will be used to compute your score for the leaderboard.
 
 When you run `make test-submission` the logs will be printed to the terminal and written out to `submission/log.txt`. If you run into errors, use the `log.txt` to determine what changes you need to make for your code to execute successfully. For an example of what the logs look like when the full process runs successfully, see [`example_log.txt`](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/example_log.txt).
 
