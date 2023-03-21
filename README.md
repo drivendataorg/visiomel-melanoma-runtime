@@ -35,7 +35,7 @@ This repository has three primary uses for competitors:
 
  - A clone of this repository
  - [Docker](https://docs.docker.com/get-docker/)
- - At least 15 GB of free space for both the sample data and Docker images
+ - At least 13 GB of free space for both the sample data and Docker images
  - [GNU make](https://www.gnu.org/software/make/) (optional, but useful for running the commands in the Makefile)
 
 Additional requirements to run with GPU:
@@ -65,23 +65,16 @@ Note that in the runtime container, there will be around 500 tifs. And of course
 
 ### Code submission format
 
-Time is a key element in this competition―we're interested in a _real-time_ solution, one that can predict the future using only information available at the present. Assuring that a solution doesn't (accidentally or otherwise) use information from the future is complicated since the final evaluation dataset is a static dataset containing many different prediction times; a feature at 9 AM is valid for predicting 10 AM (it's in the past) but invalid for predicting 8 AM (it's in the future). In other words, each prediction time defines a unique set of valid features, different from that of all other prediction times! This makes it challenging to ensure that your submission only uses valid time points for each prediction time (and even more challenging for the competition hosts to validate that _all_ submissions are valid!).
+Your final submission should be a zip archive named with the extension `.zip` (for example, `submission.zip`). The root level of the `submission.zip` file must contain a `main.py` which performs inference on the test images and writes the predictions to a file named `submission.csv` in the same directory as `main.py`.
 
-The code execution runtime is designed to avoid the need to track valid and invalid features. It simulates real-time conditions for each prediction time and provides a simple way to access features that are guaranteed to be in the past. The process is defined in the [`runtime/supervisor.py`](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/runtime/supervisor.py), which runs the submissions. To summarize, for each prediction time in the submission format:
-
-1. DrivenData's supervisor script, [**supervisor.py**](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/runtime/supervisor.py), calls your `load_model` function to load any assets (e.g., model weights) that will be needed for each prediction.
-2. The supervisor creates an airport- and time-censored extract of the features, i.e., features from a single airport from 30 hours before the prediction time until the prediction time. It also creates a **partial submission format**, which is a subset of the submission format that only includes rows for the current airport and prediction time.
-3. The supervisor calls your `predict` function passing along the censored features, the airport code, prediction time, model assets, and your solution directory.
-4. Your `predict` function uses the provided censored features to compute predictions for the current prediction time for all the flights indicated in the partial submission format. It can use your model assets, any or all of the time-censored features in `/codeexecution/data`, the partial submission format, and it can load additional assets from your solution directory if needed.
-5. Your `predict` function must return a pandas DataFrame that includes predicted minutes to pushback for the flights in the partial submission format. It should have the same format as the partial submission format with your predictions in the `minutes_until_pushback` column.
-6. The supervisor checks that your predictions for this prediction time has the same indices and same columns as the partial submission format.
-
-The supervisor repeats steps 2-6 for each airport and prediction time in order then combines all of the predictions into a single CSV, which is submitted to the platform for scoring.
+For more detail, see the "what to submit" section of the [code submission page](https://www.drivendata.org/competitions/148/visiomel/page/719/#what-to-submit).
 
 Here's a few **do**s and **don't**s:
 
 **Do**:
-- Write a function `main` that iterates over the tif files and predicts the likelihood of relapse for each one.
+- Include a `main.py` in the root directory of your submission zip. There can be extra files with more code that is called.
+- Include any model weights in your submission zip as there will be no network access.
+- Write out a `submissions.csv` to the root directory when inference is finished, matching the submission format exactly.
 - Log general information that will help you debug your submission.
 - Test your submission locally and using the smoke test functionality on the platform.
 - Consider ways to optimize your pipeline so that it runs end-to-end in under 8 hours.
@@ -91,7 +84,7 @@ Here's a few **do**s and **don't**s:
 - Use information from other images in the test set in making a prediction for a given tif file.
 - Print or log any information about the test metadata or test images, including specific data values and aggregations such as sums, means, or counts.
 
-**Participants who violate these guidelines will be subject for disqualification from the competition.**
+**Participants who violate the rules will be subject for disqualification from the competition.**
 
 ## Testing a submission locally
 
@@ -230,5 +223,5 @@ CPU_OR_GPU=gpu make build
 
 ## Good luck; have fun!
 
-Thanks for reading! Enjoy the competition, and [hit up the forum](https://community.drivendata.org/c/pushback-to-the-future/92) if you have any questions!
+Thanks for reading! Enjoy the competition, and [hit up the forum](https://community.drivendata.org/) if you have any questions!
 
