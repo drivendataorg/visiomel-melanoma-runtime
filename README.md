@@ -224,5 +224,5 @@ CPU_OR_GPU=gpu make build
 
 ## Good luck; have fun!
 
-Thanks for reading! Enjoy the competition, and [hit up the forum](https://community.drivendata.org/) if you have any questions!
+Thanks for reading! Enjoy the competition, and [hit up the forum](https://community.drivendata.org/c/visiomel-melanoma/93) if you have any questions!
 
