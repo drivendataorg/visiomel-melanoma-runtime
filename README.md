@@ -49,7 +49,7 @@ Additional requirements to run with GPU:
 
 In the official code execution platform, `code_execution/data` will contain the _actual test data_, which no participants have access to, and is what will be used to compute your score for the leaderboard.
 
-To help you develop and debug your submissions, we provide a small sample of data with the same format. These files are created from the train set, but mimic the set up that you'll have in the runtime container.
+To help you develop and debug your submissions, we provide a small sample of data with the same format. These files are created from the train set, but mimic the setup that you'll have in the runtime container.
 
 Start by downloading `code_execution_development_data.tgz` from the [data download page](https://www.drivendata.org/competitions/148/visiomel/data/). Unzip and extract the archive to `data` directory and you can develop and debug your submission on your local machine.
 
