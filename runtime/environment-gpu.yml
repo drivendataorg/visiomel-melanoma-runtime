@@ -38,3 +38,4 @@ dependencies:
   - tqdm=4.64.1
   - segmentation-models-pytorch==0.2.1
   - xgboost==1.7.4
+  - openslide-python==1.2.0
