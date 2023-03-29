@@ -24,6 +24,7 @@ This repository has three primary uses for competitors:
 ### [1. Testing a submission locally](#testing-a-submission-locally)
  - [Running your submission locally](#running-your-submission-locally)
  - [Scoring your predictions](#scoring-your-predictions)
+ - [Running the benchmark](#running-the-benchmark)
 ### [2. Troubleshooting](#troubleshooting)
  - [Downloading pre-trained weights](#downloading-pre-trained-weights)
  - [CPU and GPU](#cpu-and-gpu)
@@ -150,6 +151,22 @@ We have provided a [scoring script](https://github.com/drivendataorg/visiomel-me
 ```
 $ python scripts/score.py
 2023-03-21 16:01:04.372 | SUCCESS  | __main__:main:15 - Score: 1.4787577257948117
+```
+
+### Running the benchmark
+
+The code for the [benchmark](https://github.com/drivendataorg/visiomel-melanoma-runtime/blob/main/examples_src/benchmark/) is also provided as an example of how to structure a submission that includes loading model assets. See the benchmark [blog post](https://drivendata.co/blog/visiomel-melanoma-benchmark) for a full walkthrough. The process to run the benchmark is the same as running your own submission, except that you will reference code in `examples_src` rather than `submission_src`.
+
+```bash
+make pull
+make pack-example
+make test-submission
+```
+
+Note that here we are running `pack-example` instead of `pack-submission`. Just like with your submission, the final predictions will be saved to `submission/submission.csv` on your local machine. You can also try out the `random_baseline` by setting `EXAMPLE` when you run the make command:
+
+```bash
+EXAMPLE=random_baseline make pack-example
 ```
 
 ## Troubleshooting
