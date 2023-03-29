@@ -20,7 +20,7 @@ dependencies:
   - pytorch-lightning=1.9.1
   - pyvips=2.2.1
   - scikit-image=0.19.3
-  - scikit-learn=1.2.1
+  - scikit-learn=1.2.2
   - scipy=1.10.0
   - setuptools=67.1.0
   - six=1.16.0

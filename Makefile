@@ -53,7 +53,7 @@ NETWORK_ARGS = --network none
 endif
 
 # Name of the example submission to pack when running `make pack-example`
-EXAMPLE ?= random_baseline
+EXAMPLE ?= benchmark
 
 # Give write access to the submission folder to everyone so Docker user can write when mounted
 _submission_write_perms:
