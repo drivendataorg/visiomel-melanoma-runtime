@@ -38,3 +38,4 @@ dependencies:
   - segmentation-models-pytorch==0.2.1
   - xgboost==1.7.4
   - openslide-python==1.2.0
+  - timm==0.4.12
