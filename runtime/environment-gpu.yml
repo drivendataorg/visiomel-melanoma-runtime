@@ -40,3 +40,4 @@ dependencies:
   - xgboost==1.7.4
   - openslide-python==1.2.0
   - timm==0.4.12
+  - opencv=4.7.0
