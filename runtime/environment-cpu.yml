@@ -44,3 +44,4 @@ dependencies:
   - opencv=4.7.0
   - pip:
     - staintools==2.1.2
+    - spams==2.6.5.4
