@@ -45,6 +45,7 @@ dependencies:
   - openslide-python==1.2.0
   - timm==0.4.12
   - opencv-python-headless==4.7.0.72
+  - opencv=4.7.0
   - pip:
     - staintools==2.1.2
     - spams==2.6.5.4
