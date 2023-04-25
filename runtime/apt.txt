@@ -6,3 +6,4 @@ tzdata
 wget
 zip
 libglu1-mesa
+libjpeg-turbo8
