@@ -5,3 +5,4 @@ tree
 tzdata
 wget
 zip
+libglu1-mesa

@@ -2,6 +2,7 @@ name: condaenv
 channels:
   - conda-forge
   - defaults
+  - fastai
 dependencies:
   - eigen=3.4.0
   - keras=2.11.0
@@ -41,7 +42,7 @@ dependencies:
   - xgboost==1.7.4
   - openslide-python==1.2.0
   - timm==0.4.12
-  - opencv=4.7.0
+  - opencv-python-headless==4.7.0.72
   - pip:
     - staintools==2.1.2
     - spams==2.6.5.4
