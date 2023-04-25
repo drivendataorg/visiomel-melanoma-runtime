@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM nvidia/cuda:11.0.3-base-ubuntu20.04
 # This CUDA version does not matter
 # We will separately install the CUDA runtime via cudatoolkit using conda
 
@@ -37,8 +37,8 @@ RUN echo "Installing base packages..." \
     && apt-get install -y apt-utils 2> /dev/null \
     && xargs -a /home/${RUNTIME_USER}/apt.txt apt-get install -y \
     && apt-get clean \
-    && rm -rf  /home/${RUNTIME_USER}/apt.txt
-# rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* /home/${RUNTIME_USER}/apt.txt
+
 # ======================== user ========================
 USER ${RUNTIME_USER}
 
@@ -54,8 +54,7 @@ RUN echo "Installing Miniforge..." \
     && find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete
 
 COPY environment-${CPU_OR_GPU}.yml /home/${RUNTIME_USER}/environment.yml
-RUN [ ${CPU_OR_GPU} = "gpu" ] \
-    && export CONDA_OVERRIDE_CUDA="11.2" || export CONDA_OVERRIDE_CUDA= \
+RUN [ ${CPU_OR_GPU} = "gpu" ] && export CONDA_OVERRIDE_CUDA="11.0" || export CONDA_OVERRIDE_CUDA= \
     && mamba env create --name ${CONDA_ENV} -f /home/${RUNTIME_USER}/environment.yml  \
     && mamba clean -afy \
     && conda run pip cache purge \
@@ -67,11 +66,10 @@ RUN [ ${CPU_OR_GPU} = "gpu" ] \
 USER root
 
 ENV BASE_INSTALL=pkgs
-#COPY $BASE_INSTALL/ /$BASE_INSTALL
 RUN mkdir /$BASE_INSTALL \
     && wget -P /$BASE_INSTALL https://github.com/computationalpathologygroup/ASAP/releases/download/ASAP-2.1/ASAP-2.1-py310-Ubuntu2004.deb
-# Install ASAP
 
+# Install ASAP
 RUN apt-get update \
     && seq 3 | xargs -i apt install -y libboost-program-options1.71.0 libboost-regex1.71.0 libdcmtk14 \
     && dpkg --install /$BASE_INSTALL/ASAP-2.1-py310-Ubuntu2004.deb || true \

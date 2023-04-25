@@ -2,9 +2,12 @@ name: condaenv
 channels:
   - conda-forge
   - defaults
+  - fastai
 dependencies:
   - cudatoolkit=11.2
   - eigen=3.4.0
+  - fastai=1.0.60
+  - keras=2.11.0
   - loguru=0.6.0
   - mkl=2022.2.1
   - networkx=3.0
@@ -15,6 +18,7 @@ dependencies:
   - pip=23.0
   - pytest=7.2.1
   - python=3.10.9
+  - pytorch=1.13.1
   - pytorch-gpu=1.13.1=cuda112py310*
   - pytorch-lightning=1.9.1
   - pyvips=2.2.1
@@ -28,9 +32,10 @@ dependencies:
   - tensorboard=2.11.2
   - tensorboard-data-server=0.6.1
   - tensorboard-plugin-wit=1.8.1
+  - tensorflow=2.11.0
+  - tensorflow-base=2.11.0
   - tensorflow-gpu=2.11.0=cuda112py310*
   - tensorflow-estimator=2.11.0
-  - keras=2.11.0
   - torchmetrics=0.11.1
   - torchvision=0.14.1
   - transformers=4.27.4
@@ -39,8 +44,7 @@ dependencies:
   - xgboost==1.7.4
   - openslide-python==1.2.0
   - timm==0.4.12
-  - opencv=4.7.0
+  - opencv-python-headless==4.7.0.72
   - pip:
     - staintools==2.1.2
     - spams==2.6.5.4
-    - fastai==1.0.60
