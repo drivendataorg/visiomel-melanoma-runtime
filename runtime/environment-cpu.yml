@@ -46,3 +46,7 @@ dependencies:
   - pip:
     - staintools==2.1.2
     - spams==2.6.5.4
+    - einops==0.6.1
+    - webdataset==0.2.48
+    - rtree==1.0.1
+    - shapely==2.0.1
