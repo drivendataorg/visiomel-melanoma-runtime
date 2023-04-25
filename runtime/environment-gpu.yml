@@ -6,6 +6,7 @@ channels:
 dependencies:
   - cudatoolkit=11.2
   - eigen=3.4.0
+  - fastai=1.0.60
   - keras=2.11.0
   - loguru=0.6.0
   - mkl=2022.2.1
