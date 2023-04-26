@@ -39,20 +39,6 @@ RUN echo "Installing base packages..." \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /home/${RUNTIME_USER}/apt.txt
 
-########### Install ASAP Package ###########
-RUN wget https://github.com/computationalpathologygroup/ASAP/releases/download/ASAP-2.1/ASAP-2.1-py310-Ubuntu2004.deb
-
-RUN apt-get update \
-    && seq 3 | xargs -i apt install -y libboost-program-options1.71.0 libboost-regex1.71.0 libdcmtk14 \
-    && dpkg --install /$BASE_INSTALL/ASAP-2.1-py310-Ubuntu2004.deb || true \
-    && apt-get -f install --fix-missing --fix-broken --assume-yes \
-    && dpkg -i /$BASE_INSTALL/ASAP-2.1-py310-Ubuntu2004.deb \
-    && ldconfig -v \
-    && apt-get clean
-
-RUN rm ASAP-2.1-py310-Ubuntu2004.deb /usr/lib/x86_64-linux-gnu/libstdc++.so.6
-############################################
-
 # ======================== user ========================
 USER ${RUNTIME_USER}
 
@@ -77,10 +63,25 @@ RUN [ ${CPU_OR_GPU} = "gpu" ] && export CONDA_OVERRIDE_CUDA="11.0" || export CON
     && find ${CONDA_DIR} -follow -type f -name '*.pyc' -delete \
     && find ${CONDA_DIR} -follow -type f -name '*.js.map' -delete
 
-# ASAP-specific path setup and symlinks
-RUN echo "/opt/ASAP/bin" > ${CONDA_DIR}/envs/${CONDA_ENV}/lib/python3.10/site-packages/asap.pth
+# ======================== ASAP installation ========================
+USER root
+RUN wget https://github.com/computationalpathologygroup/ASAP/releases/download/ASAP-2.1/ASAP-2.1-py310-Ubuntu2004.deb
+
+RUN apt-get update \
+    && seq 3 | xargs -i apt install -y libboost-program-options1.71.0 libboost-regex1.71.0 libdcmtk14 \
+    && dpkg --install ASAP-2.1-py310-Ubuntu2004.deb || true \
+    && apt-get -f install --fix-missing --fix-broken --assume-yes \
+    && dpkg -i ASAP-2.1-py310-Ubuntu2004.deb \
+    && ldconfig -v \
+    && apt-get clean \
+    && echo "/opt/ASAP/bin" > ${CONDA_DIR}/envs/${CONDA_ENV}/lib/python3.10/site-packages/asap.pth \
+    && :
+
+RUN rm ASAP-2.1-py310-Ubuntu2004.deb /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 RUN ln -s ${CONDA_DIR}/envs/${CONDA_ENV}/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 RUN ln -s ${CONDA_DIR}/envs/${CONDA_ENV}/lib/libpython3.10.so.1.0 /usr/lib/libpython3.10.so.1.0
+USER ${RUNTIME_USER}
+# ===================================================================
 
 WORKDIR /code_execution
 
