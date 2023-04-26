@@ -44,7 +44,6 @@ dependencies:
   - openslide-python==1.2.0
   - timm==0.4.12
   - opencv-python-headless==4.7.0.72
-  - fastai=1.0.60
   - einops==0.6.1
   - rtree==1.0.1
   - shapely==2.0.1
