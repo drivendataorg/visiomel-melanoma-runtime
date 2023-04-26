@@ -15,6 +15,7 @@ packages = [
     "sklearn",
     "tensorflow",
     "torch",
+    "multiresolutionimageinterface",  # ASAP package
 ]
 
 
