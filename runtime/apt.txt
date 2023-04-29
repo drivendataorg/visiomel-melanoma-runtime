@@ -7,3 +7,4 @@ wget
 zip
 libglu1-mesa
 libjpeg-turbo8
+libopenblas-dev
