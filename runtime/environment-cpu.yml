@@ -47,5 +47,7 @@ dependencies:
   - rtree==1.0.1
   - shapely==2.0.1
   - pip:
+    - catboost==1.2
+    - lightgbm==3.3.5 
     - staintools==2.1.2
     - spams==2.6.5.4
