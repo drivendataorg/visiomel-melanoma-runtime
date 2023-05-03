@@ -46,6 +46,8 @@ dependencies:
   - einops==0.6.1
   - rtree==1.0.1
   - shapely==2.0.1
+  - catboost==1.2
+  - lightgbm==3.3.5 
   - pip:
     - staintools==2.1.2
     - spams==2.6.5.4
