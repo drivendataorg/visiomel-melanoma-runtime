@@ -39,7 +39,7 @@ dependencies:
   - torchvision=0.14.1
   - transformers=4.27.4
   - tqdm=4.64.1
-  - segmentation-models-pytorch==0.2.1
+  - segmentation-models-pytorch==0.3.1
   - xgboost==1.7.4
   - openslide-python==1.2.0
   - timm==0.4.12
