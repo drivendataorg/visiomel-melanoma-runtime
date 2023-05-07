@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.0.3-base-ubuntu20.04
+FROM nvidia/cuda:11.0.3-devel-ubuntu20.04
 # This CUDA version does not matter
 # We will separately install the CUDA runtime via cudatoolkit using conda
 
@@ -80,6 +80,23 @@ RUN apt-get update \
 RUN rm ASAP-2.1-py310-Ubuntu2004.deb /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 RUN ln -s ${CONDA_DIR}/envs/${CONDA_ENV}/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 RUN ln -s ${CONDA_DIR}/envs/${CONDA_ENV}/lib/libpython3.10.so.1.0 /usr/lib/libpython3.10.so.1.0
+USER ${RUNTIME_USER}
+# ===================================================================
+
+# ======================== MinkowskiEngine installation =============
+USER root
+ENV MAX_JOBS=2 \
+    TORCH_CUDA_ARCH_LIST="6.0 6.1 7.0+PTX" \
+    TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
+RUN git clone https://github.com/StanfordVL/MinkowskiEngine.git /tmp/MinkowskiEngine
+WORKDIR /tmp/MinkowskiEngine
+RUN if [ "$CPU_OR_GPU" = "gpu" ]; then \
+      conda run -n ${CONDA_ENV} python setup.py install --force_cuda; \
+    else \ 
+      conda run -n ${CONDA_ENV} python setup.py install; \
+    fi
+WORKDIR /tmp
+RUN rm -r MinkowskiEngine
 USER ${RUNTIME_USER}
 # ===================================================================
 
