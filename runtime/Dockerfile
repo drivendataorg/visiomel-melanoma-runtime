@@ -86,7 +86,7 @@ USER ${RUNTIME_USER}
 # ======================== MinkowskiEngine installation =============
 USER root
 ENV MAX_JOBS=2 \
-    TORCH_CUDA_ARCH_LIST="6.0 6.1 7.0+PTX" \
+    TORCH_CUDA_ARCH_LIST="3.7" \
     TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 RUN git clone https://github.com/StanfordVL/MinkowskiEngine.git /tmp/MinkowskiEngine
 WORKDIR /tmp/MinkowskiEngine
