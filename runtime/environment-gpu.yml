@@ -5,6 +5,7 @@ channels:
   - fastai
 dependencies:
   - cudatoolkit=11.2
+  - cudnn=8.4.1
   - eigen=3.4.0
   - keras=2.11.0
   - loguru=0.6.0
