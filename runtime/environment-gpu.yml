@@ -54,3 +54,5 @@ dependencies:
   - pip:
     - staintools==2.1.2
     - spams==2.6.5.4
+    - scikit-fmm==2023.04.02
+    - imbalanced_learn==0.10.1
